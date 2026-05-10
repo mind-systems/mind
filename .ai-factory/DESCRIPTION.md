@@ -2,7 +2,7 @@
 
 ## Overview
 
-Mind is a wellness/breathing app consisting of a NestJS REST API backend, a Flutter mobile app (iOS/Android), and a static landing page. Users authenticate via passwordless email (one-time code), perform guided breathing sessions, and the app persists session history both locally (Drift) and remotely (PostgreSQL). The landing page serves as a public-facing entry point for the product.
+Mind is a wellness/breathing app consisting of a NestJS REST API backend, a Flutter mobile app (iOS/Android), a static landing page, an MCP server for Claude Code integration, and a Flutter plugin wrapping the Neiry neurofeedback hardware SDK. Users authenticate via passwordless email (one-time code), perform guided breathing sessions, and the app persists session history both locally (Drift) and remotely (PostgreSQL). The landing page serves as a public-facing entry point for the product.
 
 ## Core Features
 
@@ -34,6 +34,17 @@ Mind is a wellness/breathing app consisting of a NestJS REST API backend, a Flut
 ### Landing (`mind_landing/`)
 - **Stack:** Plain HTML/CSS/JS — single `index.html`, no build step, no dependencies
 - **Current state:** Placeholder with a playable Snake game; real product content TBD
+
+### MCP Server (`mind_mcp/`)
+- **Language:** TypeScript
+- **Transport:** stdio (MCP protocol)
+- **Role:** Claude Code integration — exposes Mind API tools (breath sessions, auth tokens) to AI agents
+- **Proto:** consumes `.proto` files from `mind_api/proto/`, regenerates TypeScript stubs via `npm run proto:gen`
+
+### Neiry Kit (`neiry_kit/`)
+- **Stack:** Flutter plugin (Dart + native iOS/Android bridges)
+- **Role:** Wraps the Neiry/Capsule neurofeedback hardware SDK; tested via included example app before integrating into `mind_mobile`
+- **Vendored binaries:** `official/iOS/CapsuleClient.framework` (XCFramework), `official/Android/CapsuleService.aar` + `devicedriver.aar`
 
 ## Architecture Notes
 

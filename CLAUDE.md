@@ -4,13 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository structure
 
-This root repo is a coordination layer. `mind_api/`, `mind_mobile/`, and `mind_landing/` are **separate git repositories** (each has its own `.git` directory) that live inside it as subdirectories.
+This root repo is a coordination layer. All sub-directories below are **separate git repositories** (each has its own `.git` directory) that live inside it as subdirectories.
 
 | Directory | Stack | Purpose |
 |-----------|-------|---------|
 | `mind_api/` | NestJS + TypeORM + PostgreSQL | Backend REST API — separate git repo |
 | `mind_mobile/` | Flutter + Riverpod + Drift | iOS/Android mobile app — separate git repo |
 | `mind_landing/` | Plain HTML/CSS/JS | Static landing page — separate git repo |
+| `mind_mcp/` | TypeScript + MCP stdio | MCP server for Claude Code — separate git repo |
+| `neiry_kit/` | Flutter plugin | Neiry neurofeedback SDK wrapper — separate git repo |
 
 **Git operations** (status, diff, commit, branch) must be run inside the respective subdirectory, not from the root. The root repo has no visibility into changes inside `mind_api/` or `mind_mobile/`.
 
