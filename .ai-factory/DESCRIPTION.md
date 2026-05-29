@@ -2,7 +2,7 @@
 
 ## Overview
 
-Mind is a wellness/breathing app consisting of a NestJS gRPC backend, a Flutter mobile app (iOS/Android), a static landing page, an MCP server for Claude Code integration, and a Flutter plugin wrapping the Neiry neurofeedback hardware SDK. Users authenticate via passwordless email (one-time code) or Google Sign-In, perform guided breathing sessions, and the app persists session history both locally (Drift) and remotely (PostgreSQL) with real-time sync over gRPC.
+Mind is a wellness/breathing app consisting of a NestJS gRPC backend, a Flutter mobile app (iOS/Android), a React web dashboard for historical data, a static landing page, an MCP server for Claude Code integration, and a Flutter plugin wrapping the Neiry neurofeedback hardware SDK. Users authenticate via passwordless email (one-time code) or Google Sign-In, perform guided breathing sessions, and the app persists session history both locally (Drift) and remotely (PostgreSQL) with real-time sync over gRPC. The web dashboard provides a browser-based read-only view of session history, biometric streams, and NFB calibration trends.
 
 ## Core Features
 
@@ -11,6 +11,7 @@ Mind is a wellness/breathing app consisting of a NestJS gRPC backend, a Flutter 
 - Breathing session history — CRUD, pagination, local cache + remote sync
 - Offline-first: Drift (SQLite) local DB, synced to API on reconnect via gRPC streaming
 - Real-time activity tracking: bidi-streaming gRPC session lifecycle + instruction stream
+- Web dashboard (browser): historical session viewer with biometric time-series charts (heart rate, EEG bands, emotions) and NFB calibration trend charts, authenticated with the same JWT as the mobile app
 - Static landing page with Snake easter-egg (placeholder while real content is built)
 
 ## Tech Stack
@@ -32,6 +33,16 @@ Mind is a wellness/breathing app consisting of a NestJS gRPC backend, a Flutter 
 - **Navigation:** GoRouter
 - **Transport:** gRPC via `package:grpc` + `GrpcAuthInterceptor` (JWT in metadata)
 - **Flavors:** dev / prod
+
+### Web Dashboard (`mind_web/`)
+- **Language:** TypeScript
+- **Framework:** React 18 + Vite
+- **Styling:** TailwindCSS
+- **Routing:** React Router v6
+- **Data fetching:** TanStack Query (React Query)
+- **Charts:** Recharts
+- **Auth:** JWT in localStorage, same token format as mobile; Google Sign-In via Web OAuth redirect; email OTP via REST API
+- **Mode:** read-only, browser SPA, no SSR
 
 ### Landing (`mind_landing/`)
 - **Stack:** Plain HTML/CSS/JS — single `index.html`, no build step, no dependencies
@@ -61,7 +72,8 @@ Layered architecture: Repository → Notifier (domain) → Service → ViewModel
 - Proto contract changes start in `mind_api/proto/` — single source of truth
 - After any proto change: implement in `mind_api` → copy `.proto` to consumers → consumers regenerate stubs
 - Dart models + Drift schema must match API proto contracts
-- Auth changes affect both `mind_api/src/users/` and `mind_mobile/lib/Core/Grpc/GrpcAuthInterceptor.dart`
+- Auth changes affect `mind_api/src/users/`, `mind_mobile/lib/Core/Grpc/GrpcAuthInterceptor.dart`, and `mind_web/src/core/auth/`
+- New REST read endpoints added for `mind_web` must include `@UseGuards(JwtAuthGuard)` and ownership checks scoped to the authenticated user
 
 ## Non-Functional Requirements
 

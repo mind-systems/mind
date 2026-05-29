@@ -19,10 +19,11 @@ Run these commands in order:
 5. git clone https://github.com/mind-systems/mind_landing.git mind_landing
 6. git clone https://github.com/mind-systems/mind_mcp.git mind_mcp
 7. git clone https://github.com/mind-systems/neiry_kit.git neiry_kit
+8. git clone https://github.com/mind-systems/mind_web.git mind_web
 
 Directory structure must be preserved exactly — build scripts and proto schemas reference files via relative paths from the root.
 
-After cloning, for each repository (root, mind_api, mind_mobile, mind_landing, mind_mcp, neiry_kit) find the most recently committed branch and switch to it:
+After cloning, for each repository (root, mind_api, mind_mobile, mind_landing, mind_mcp, neiry_kit, mind_web) find the most recently committed branch and switch to it:
 - Run `git branch -r --sort=-committerdate` to list remote branches by recency
 - Check out the top result (skip HEAD and main/master if a feature branch is more recent)
 - If the most recent branch is already main/master, stay on it
@@ -38,6 +39,7 @@ After switching branches everywhere, read CLAUDE.md in the root and in each sub-
 |-----------|--------|-------|---------|
 | `mind_api/` | [mind-awake-api](https://github.com/mind-systems/mind-awake-api) | NestJS + TypeORM + PostgreSQL | Backend REST API |
 | `mind_mobile/` | [mind_mobile](https://github.com/mind-systems/mind_mobile) | Flutter + Riverpod + Drift | iOS/Android mobile app |
+| `mind_web/` | [mind_web](https://github.com/mind-systems/mind_web) | React + Vite + TypeScript | Browser dashboard for historical data |
 | `mind_landing/` | [mind_landing](https://github.com/mind-systems/mind_landing) | Plain HTML/CSS/JS | Static landing page |
 | `mind_mcp/` | [mind_mcp](https://github.com/mind-systems/mind_mcp) | TypeScript + MCP stdio | MCP server for Claude Code |
 | `neiry_kit/` | [neiry_kit](https://github.com/mind-systems/neiry_kit) | Flutter plugin | Neiry neurofeedback SDK wrapper |
@@ -50,6 +52,7 @@ mind_context/          ← you are here (coordination layer)
 ├── .claude/           — shared Claude Code skills
 ├── mind_api/          — backend (separate git repo)
 ├── mind_mobile/       — mobile app (separate git repo)
+├── mind_web/          — browser dashboard (separate git repo)
 ├── mind_landing/      — landing page (separate git repo)
 ├── mind_mcp/          — MCP server (separate git repo)
 └── neiry_kit/         — Flutter plugin (separate git repo)

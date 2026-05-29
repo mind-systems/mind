@@ -1,0 +1,21 @@
+Phase 29 — Coaching System Computation Model (Deterministic + Optional Adaptive Layer)
+
+The Coaching System is defined as a deterministic behavioral optimization layer responsible for translating long-term physiological and behavioral patterns into actionable adaptation signals for user guidance. Its primary function is not classification, prediction, or learning in the classical machine learning sense, but structured pattern stabilization across sessions.
+
+The system operates on top of already computed and persisted user state data, including session-level physiological summaries, module-level stability metrics, and aggregated hashrate trajectories stored in the User State System. It does not consume raw biometric streams and does not participate in real-time computation.
+
+The core constraint of Phase 21–25 remains valid: the system must not rely on opaque or non-deterministic machine learning models in any real-time or economic decision path. However, Phase 29 is explicitly exempt from this constraint under a strict boundary definition: it operates only on historical, persisted, versioned data and does not influence reward computation, eligibility evaluation, or hashrate calculation.
+
+Within this boundary, the Coaching System is allowed to use two distinct computation modes.
+
+The primary mode is a deterministic rule-based engine. This engine operates on explicitly defined thresholds, deltas, and stability conditions derived from physiological signals. It evaluates session coherence, detects deviations from baseline progression curves, and generates adaptation vectors based on pre-defined transformation rules. These rules are fully transparent, fully replayable, and versioned through the same configuration system as the rest of the platform. This ensures that any coaching decision can be reproduced exactly given the same historical data and configuration version.
+
+The secondary mode is an optional offline analytical layer that may incorporate statistical or machine learning techniques for pattern discovery only. This layer is strictly isolated from any runtime decision-making and does not influence live system behavior. Its outputs are limited to suggestion candidates, pattern clusters, or feature embeddings that must be post-processed by the deterministic rule engine before being applied to user-facing coaching outputs. In other words, any learned representation is never directly executed; it is always translated into deterministic rules before use.
+
+The concept of session coherence maps is defined as a deterministic multi-dimensional projection of user physiological stability over time. It is computed using fixed transformation functions over rolling session windows and does not rely on learned models. Cross-session pattern analysis is defined as a time-series aggregation of these deterministic coherence maps, producing trend vectors that describe user progression trajectories.
+
+Adaptation vectors are the final output of the system and represent actionable coaching adjustments. These vectors are computed exclusively from deterministic rule evaluation over aggregated session states and must be fully reproducible. They may optionally be augmented by insights derived from the offline analytical layer, but only after translation into deterministic rules.
+
+The system explicitly forbids the use of machine learning models in any path that directly influences economic reward systems, eligibility engines, or real-time physiological evaluation. The Coaching System is the only subsystem allowed to contain an experimental analytical layer, and even there it is strictly sandboxed and non-authoritative.
+
+In summary, Phase 29 introduces a hybrid architecture where deterministic rule-based computation remains the authoritative execution layer, while optional offline analytical methods are allowed only as advisory input generators. This preserves system determinism while still allowing long-term evolution of coaching intelligence without contaminating core economic logic.
