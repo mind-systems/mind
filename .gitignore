@@ -5,6 +5,7 @@ mind_mcp/
 mind_landing/
 mind_web/
 neiry_kit/
+camera_ppg_kit/
 
 # OS
 .DS_Store
