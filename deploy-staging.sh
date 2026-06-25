@@ -9,9 +9,9 @@ REMOTE_DIR="/srv/mind"
 SERVICE="${1:-mind_api}"
 
 echo "==> Building $SERVICE..."
-docker compose --env-file .env.dev -f docker-compose.dev.yml build "$SERVICE"
+docker compose --env-file .env.staging -f docker-compose.staging.yml build "$SERVICE"
 
-PROJECT_NAME=$(docker compose --env-file .env.dev -f docker-compose.dev.yml config --format json | python3 -c "import sys,json; print(json.load(sys.stdin)['name'])")
+PROJECT_NAME=$(docker compose --env-file .env.staging -f docker-compose.staging.yml config --format json | python3 -c "import sys,json; print(json.load(sys.stdin)['name'])")
 IMAGE_NAME="${PROJECT_NAME}-${SERVICE}"
 
 echo "==> Pushing image $IMAGE_NAME to server..."
@@ -19,10 +19,10 @@ docker save "$IMAGE_NAME" | gzip | $SSH "$SERVER" "docker load"
 
 echo "==> Syncing compose files..."
 $SSH "$SERVER" "mkdir -p $REMOTE_DIR/mind_api"
-$SCP docker-compose.dev.yml .env.dev "$SERVER:$REMOTE_DIR/"
-$SCP mind_api/.env.dev "$SERVER:$REMOTE_DIR/mind_api/.env.dev"
+$SCP docker-compose.staging.yml .env.staging "$SERVER:$REMOTE_DIR/"
+$SCP mind_api/.env.staging "$SERVER:$REMOTE_DIR/mind_api/.env.staging"
 
 echo "==> Restarting $SERVICE on server..."
-$SSH "$SERVER" "cd $REMOTE_DIR && docker compose --env-file .env.dev -f docker-compose.dev.yml up -d $SERVICE"
+$SSH "$SERVER" "cd $REMOTE_DIR && docker compose --env-file .env.staging -f docker-compose.staging.yml up -d $SERVICE"
 
 echo "==> Done."

@@ -58,7 +58,7 @@ mind/
 |------|---------|
 | `mind_api/src/main.ts` | NestJS bootstrap |
 | `mind_api/src/app.module.ts` | Root module, global config |
-| `mind_mobile/lib/main_dev.dart` | Flutter dev entrypoint |
+| `mind_mobile/lib/main_staging.dart` | Flutter staging entrypoint |
 | `mind_mobile/lib/main_prod.dart` | Flutter prod entrypoint |
 | `mind_mobile/lib/Core/App.dart` | Manual DI singleton |
 | `mind_mobile/lib/router.dart` | GoRouter route definitions |

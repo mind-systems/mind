@@ -1,13 +1,13 @@
-name: mind_dev
+name: mind_staging
 
 services:
-  mind_database_dev_host:
+  mind_database_staging_host:
     image: postgres:17-alpine
     restart: unless-stopped
     env_file:
-      - ./mind_api/.env.dev
+      - ./mind_api/.env.staging
     volumes:
-      - db_dev_data:/var/lib/postgresql/data
+      - db_staging_data:/var/lib/postgresql/data
     networks:
       - mind_net
     healthcheck:
@@ -27,12 +27,12 @@ services:
       target: production
     restart: unless-stopped
     env_file:
-      - ./mind_api/.env.dev
+      - ./mind_api/.env.staging
     ports:
       - "3001:3001"
       - "50052:50052"
     depends_on:
-      mind_database_dev_host:
+      mind_database_staging_host:
         condition: service_healthy
     networks:
       - mind_net
@@ -63,7 +63,7 @@ services:
       - mind_net
 
 volumes:
-  db_dev_data:
+  db_staging_data:
 
 networks:
   mind_net:
